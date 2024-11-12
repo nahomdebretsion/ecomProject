@@ -11,8 +11,8 @@
 	<groupId>com.ecomerce.xion</groupId>
 	<artifactId>order-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>order-service</name>
-	<description>product-servic project for ecomece xion</description>
+	<name>parent-service</name>
+	<description>parent-servic project for ecomece xion</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -81,6 +81,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>ecomerce-springboot-project</finalName>
 	</build>
 
 </project>
