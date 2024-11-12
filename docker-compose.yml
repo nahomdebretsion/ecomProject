@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  # Order Service with gRPC and SQL Server
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourPassword123
+    ports:
+      - "1433:1433"
+
+  order-service:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"  # gRPC port
+    depends_on:
+      - sqlserver
+
+  # Payment Service with GraphQL and MongoDB
+#  mongodb-payment:
+#    image: mongo
+#    ports:
+#      - "27017:27017"
+#    volumes:
+#      - mongo-data:/data/db
+#
+#  payment-service:
+#    build:
+#      context: ./payment-service
+#    ports:
+#      - "4000:4000"  # GraphQL port
+#    depends_on:
+#      - mongodb-payment
+#
+#  # Inventory/Product Service with GraphQL and MongoDB
+#  mongodb-inventory:
+#    image: mongo
+#    ports:
+#      - "27018:27017"
+#    volumes:
+#      - mongo-inventory-data:/data/db
+#
+#  inventory-service:
+#    build:
+#      context: ./inventory-service
+#    ports:
+#      - "4001:4001"  # GraphQL port
+#    depends_on:
+#      - mongodb-inventory
+#
+#  # Shopping Cart Service with Redis
+#  redis-cart:
+#    image: redis
+#    ports:
+#      - "6379:6379"
+#
+#  shopping-cart-service:
+#    build:
+#      context: ./shopping-cart-service
+#    ports:
+#      - "4002:4002"
+#    depends_on:
+#      - redis-cart
+#
+#  # Discount Service with REST and PostgreSQL
+#  postgres-discount:
+#    image: postgres
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=password
+#      - POSTGRES_DB=discounts
+#    ports:
+#      - "5432:5432"
+#
+#  discount-service:
+#    build:
+#      context: ./discount-service
+#    ports:
+#      - "8080:8080"  # REST API port
+#    depends_on:
+#      - postgres-discount
+
+
+    # PostgreSQL for Product Service
+  postgres-product:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=products
+    ports:
+      - "5433:5432"  # Avoid port conflicts if using 5432 elsewhere
+    volumes:
+      - /Users/nahomsamri123/docker-volumes/postgres-product-data:/var/lib/postgresql/data
+
+    # Product Service with GraphQL
+  product-service:
+    build:
+      context: ./product-service
+    ports:
+      - "8081:8081"  # GraphQL API port
+    depends_on:
+      - postgres-product
+
+volumes:
+  mongo-data:
+  mongo-inventory-data:
+  redis-data:
+  postgres-data:
+  postgres-product-data:
+
