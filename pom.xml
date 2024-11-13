@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ecomerce.xion</groupId>
-	<artifactId>order-service</artifactId>
+	<artifactId>parent-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>parent-service</name>
 	<description>parent-servic project for ecomece xion</description>
@@ -76,6 +76,7 @@
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<mainClass>com.ecommerce.xion.order_service.OrderServiceApplication</mainClass>
 						</exclude>
 					</excludes>
 				</configuration>
